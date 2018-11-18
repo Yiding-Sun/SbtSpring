@@ -31,6 +31,9 @@ libraryDependencies += "org.springframework.boot" % "spring-boot-starter-data-mo
 
 libraryDependencies += "org.springframework.boot" % "spring-boot-autoconfigure" % "2.0.2.RELEASE"
 
+// libraryDependencies += "org.springframework.boot" % "spring-boot-starter-actuator" % "2.0.2.RELEASE"
+
+
 
 
 // libraryDependencies += "org.hibernate" % "hibernate-core" % "5.3.7.Final"

@@ -64,8 +64,6 @@ class Controller(repository:Repository){
 
 
 
-Cc: spring data MongoRepoistory <sunyidingcn@yahoo.com>
-
 // class MongoService{
 //   def main={
 //     def getCollection()={
