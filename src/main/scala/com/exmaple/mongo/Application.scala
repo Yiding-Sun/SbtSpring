@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.{ EnableWebSecurity, WebSecurityConfigurerAdapter }
+import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.{ GetMapping, PathVariable, RestController }
 import scala.beans.BeanProperty
 
@@ -27,6 +28,9 @@ class Application{
     val mongo=new MongoClientFactoryBean
     mongo.setHost("localhost")
     mongo
+  }
+  @Bean def controller(res:DataRepoistory)={
+    new Controller(res)
   }
 }
 object Application{
@@ -44,26 +48,23 @@ class SecureConfig extends WebSecurityConfigurerAdapter{
 }
 
 @RestController
-class Controller{
-  @Autowired val mongo:MongoOperations= null
+@Component
+class Controller(repository:Repository){
   @GetMapping(Array("hello"))
   def hello="Hello World!"
   @GetMapping(Array("save/{user}/{pass}"))
   def save(@PathVariable user:String, @PathVariable pass:String)={
-    mongo.save(Person(user,pass),"person")
+    repository.save(Person(user,pass)).toString()
   }
   @GetMapping(Array("read/{user}"))
   def read( @PathVariable user:String )={
-    val person=mongo.find(Query.query(Criteria.where("username").is(user)), classOf[Person]).get(0)
-    person.toString()
+    repository.read(user).toString()
   }
 }
 
-@Document
-case class Person(@BeanProperty username:String,password:String){
-  @Id @BeanProperty val id:String=null
-}
 
+
+Cc: spring data MongoRepoistory <sunyidingcn@yahoo.com>
 
 // class MongoService{
 //   def main={
